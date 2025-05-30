@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website with Animated Text and Donut Hub</title>
+    <title>Website with Larger Text and Updated Words</title>
     <style>
         body {
             background: linear-gradient(to right, #000000, #ba00d6); /* Left-to-right gradient */
@@ -22,7 +22,7 @@
         h1 {
             font-family: 'Exo 2', Arial, sans-serif; /* Exo 2 for heading */
             font-weight: 700; /* Bold weight */
-            font-size: 2rem; /* Reverted to original h1 size */
+            font-size: 4rem; /* Larger text size for all text in h1 */
             color: #c71585; /* Vibrant purple (distinct from background) */
             opacity: 0.9; /* Slightly higher opacity */
             animation: fadeInUp 1s ease-out forwards; /* Initial fade-in animation */
@@ -30,12 +30,13 @@
         }
         .changing-word-container {
             display: inline-block; /* Container for changing words */
-            width: 200px; /* Fixed width to prevent size changes */
+            width: 250px; /* Width to accommodate longer text */
             text-align: left; /* Align text left within container */
         }
         .changing-word {
             color: #ffffff; /* White color for changing words */
             display: inline-block; /* Needed for animation */
+            white-space: nowrap; /* Prevent text from stacking */
         }
         .animate {
             animation: scaleFade 0.5s ease-in-out; /* Animation triggered on word change */
@@ -69,7 +70,7 @@
 <body>
     <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word">fun</span></span></h1>
     <script>
-        const words = ["fun", "ease of use", "Free scripting", "Donut Hub"];
+        const words = ["fun", "ease of use", "Free scripts", "Donut Hub"];
         let currentIndex = 0;
         const changingWord = document.getElementById("changing-word");
 
