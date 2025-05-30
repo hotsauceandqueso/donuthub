@@ -3,30 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Text with Custom Font and Opacity</title>
+    <title>Website with Animated Text and Donut Hub</title>
     <style>
         body {
-            background-color: #1c2526; /* Dark background */
-            color: #ffffff; /* White text for contrast */
-            font-family: 'Montserrat', Arial, sans-serif; /* Custom font with fallback */
-            opacity: 0.8; /* Text opacity (0.0 to 1.0, where 1.0 is fully opaque) */
-            text-align: center; /* Center all text */
+            background: linear-gradient(to right, #000000, #ba00d6); /* Left-to-right gradient */
+            background-size: cover; /* Ensure gradient covers the viewport */
+            font-family: 'Exo 2', Arial, sans-serif; /* Sleek, futuristic font */
+            opacity: 0.8; /* Body opacity */
+            text-align: center; /* Center text horizontally */
             margin: 0;
-            padding: 35px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 25vh; /* Full viewport height for vertical centering */
+            justify-content: flex-start; /* Align content to top */
+            min-height: 100vh; /* Full viewport height */
         }
-        h1, p {
-            opacity: 0.9; /* Slightly different opacity for specific elements, if desired */
+        h1 {
+            font-family: 'Exo 2', Arial, sans-serif; /* Exo 2 for heading */
+            font-weight: 700; /* Bold weight */
+            font-size: 2rem; /* Reverted to original h1 size */
+            color: #c71585; /* Vibrant purple (distinct from background) */
+            opacity: 0.9; /* Slightly higher opacity */
+            animation: fadeInUp 1s ease-out forwards; /* Initial fade-in animation */
+            margin: 0; /* Remove default margin */
+        }
+        .changing-word-container {
+            display: inline-block; /* Container for changing words */
+            width: 200px; /* Fixed width to prevent size changes */
+            text-align: left; /* Align text left within container */
+        }
+        .changing-word {
+            color: #ffffff; /* White color for changing words */
+            display: inline-block; /* Needed for animation */
+        }
+        .animate {
+            animation: scaleFade 0.5s ease-in-out; /* Animation triggered on word change */
+        }
+        /* Animation for initial heading */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+        /* Animation for changing words */
+        @keyframes scaleFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
-    <!-- Import a custom font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Import Exo 2 font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
+    <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word">fun</span></span></h1>
+    <script>
+        const words = ["fun", "ease of use", "Free scripting", "Donut Hub"];
+        let currentIndex = 0;
+        const changingWord = document.getElementById("changing-word");
+
+        function changeWord() {
+            // Remove animation class
+            changingWord.classList.remove("animate");
+            // Trigger reflow to restart animation
+            void changingWord.offsetWidth;
+            // Update word
+            changingWord.textContent = words[currentIndex];
+            // Add animation class
+            changingWord.classList.add("animate");
+            currentIndex = (currentIndex + 1) % words.length; // Cycle through words
+
+            // If we just displayed "Donut Hub", pause and restart
+            if (currentIndex === 0) {
+                setTimeout(() => {
+                    changeWord(); // Restart cycle
+                }, 5000); // Wait 5 seconds before restarting
+            }
+        }
+
+        // Change word every 4 seconds, unless it's "Donut Hub"
+        function startCycle() {
+            changeWord(); // Initial call
+            const interval = setInterval(() => {
+                if (currentIndex === 0 && changingWord.textContent === "Donut Hub") {
+                    clearInterval(interval); // Stop interval for "Donut Hub"
+                    setTimeout(startCycle, 5000); // Restart after 5 seconds
+                } else {
+                    changeWord();
+                }
+            }, 4000); // 4 seconds per word
+        }
+
+        // Start the cycle
+        startCycle();
+    </script>
 </body>
 </html>
