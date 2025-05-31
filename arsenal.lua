@@ -108,7 +108,7 @@ circle.Thickness = 2
 circle.Transparency = 0.5
 circle.Color = Color3.fromRGB(0, 255, 140)
 circle.Filled = false
-circle.Visible = true
+circle.Visible = false
 
 -- UTILS
 local function getClosestPlayerInFOV()
