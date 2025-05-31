@@ -166,6 +166,7 @@ end
 runService.RenderStepped:Connect(function()
     local center = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
     circle.Position = center
+    circle.Visible = aimbotEnabled -- Only show circle if aimbot is enabled
 
     updateESP()
 
@@ -177,3 +178,4 @@ runService.RenderStepped:Connect(function()
         end
     end
 end)
+
