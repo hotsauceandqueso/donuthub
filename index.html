@@ -32,19 +32,12 @@
             display: inline-flex; /* Use flex to keep word and period together */
             align-items: baseline; /* Align items to baseline for consistent positioning */
             width: auto; /* Adjust width dynamically */
+            min-width: 250px; /* Ensure enough space for longer text */
         }
         .changing-word {
             color: #ffffff; /* White color for changing words */
             display: inline-block; /* Needed for animation */
             white-space: nowrap; /* Prevent text from stacking */
-            width: 150px; /* Fixed width to prevent shifting */
-            text-align: center; /* Center text within the fixed width */
-        }
-        .changing-word:not([data-word="Donut Hub"])::before,
-        .changing-word:not([data-word="Donut Hub"])::after {
-            content: '"'; /* Add quotes except for Donut Hub */
-            color: #ffffff; /* White quotes to match word color */
-            display: inline; /* Keep quotes inline */
         }
         .period {
             color: #000000; /* Black color for period */
@@ -56,7 +49,7 @@
             animation: scaleFade 0.5s ease-in-out; /* Animation triggered on word change */
         }
         .rainbow {
-            animation: rainbowText 6s linear infinite, scaleFade 0.5s ease-in-out; /* Combine animations */
+            animation: rainbowText 6s linear infinite; /* Rainbow color animation */
         }
         /* Animation for initial heading */
         @keyframes fadeInUp {
@@ -96,7 +89,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word" data-word="fun">fun</span><span id="period" class="period">.</span></span></h1>
+    <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word">fun</span><span id="period" class="period">.</span></span></h1>
     <script>
         const words = ["fun", "ease of use", "Free scripts", "Donut Hub"];
         let currentIndex = 0;
@@ -110,9 +103,8 @@
             // Trigger reflow to restart animation
             void changingWord.offsetWidth;
             void period.offsetWidth;
-            // Update word and data attribute
+            // Update word
             changingWord.textContent = words[currentIndex];
-            changingWord.setAttribute("data-word", words[currentIndex]);
             // Add animation class to word and period
             changingWord.classList.add("animate");
             period.classList.add("animate");
