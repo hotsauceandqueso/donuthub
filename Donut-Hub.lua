@@ -1,61 +1,69 @@
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+-- LocalScript
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "CustomVerticalGui"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = playerGui
+-- Create UI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "DonutHubUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame")
-frame.Name = "MainFrame"
-frame.Size = UDim2.new(0.18, 0, 0.4, 0)
-frame.Position = UDim2.new(0.7, 0, 0.3, 0)
-frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true
-frame.Parent = screenGui
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 160)
+MainFrame.Position = UDim2.new(0.35, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
 
-local frameCorner = Instance.new("UICorner")
-frameCorner.CornerRadius = UDim.new(0, 12)
-frameCorner.Parent = frame
+-- Smooth corners
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = MainFrame
 
-local topBar = Instance.new("Frame")
-topBar.Name = "TopBar"
-topBar.Size = UDim2.new(1, 0, 0, 30)
-topBar.Position = UDim2.new(0, 0, 0, 0)
-topBar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-topBar.BorderSizePixel = 0
-topBar.Parent = frame
+-- Title
+local Title = Instance.new("TextLabel")
+Title.Text = "Donut Hub"
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
+Title.Parent = MainFrame
 
-local topCorner = Instance.new("UICorner")
-topCorner.CornerRadius = UDim.new(0, 12)
-topCorner.Parent = topBar
+-- Button
+local ArsenalButton = Instance.new("TextButton")
+ArsenalButton.Size = UDim2.new(0.8, 0, 0, 35)
+ArsenalButton.Position = UDim2.new(0.1, 0, 0, 60)
+ArsenalButton.Text = "Load Arsenal Script"
+ArsenalButton.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+ArsenalButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ArsenalButton.Font = Enum.Font.Gotham
+ArsenalButton.TextSize = 16
+ArsenalButton.BorderSizePixel = 0
+ArsenalButton.AutoButtonColor = true
+ArsenalButton.Parent = MainFrame
 
-local closeButton = Instance.new("TextButton")
-closeButton.Name = "CloseButton"
-closeButton.Size = UDim2.new(0, 30, 0, 30)
-closeButton.Position = UDim2.new(0, 5, 0, 0)
-closeButton.BackgroundTransparency = 1
-closeButton.Text = "X"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Font = Enum.Font.SourceSansBold
-closeButton.TextSize = 18
-closeButton.BorderSizePixel = 0
-closeButton.Parent = topBar
+-- Smooth button corners
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 6)
+ButtonCorner.Parent = ArsenalButton
 
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Name = "TitleLabel"
-titleLabel.Size = UDim2.new(0, 120, 0, 30)
-titleLabel.Position = UDim2.new(1, -125, 0, 0)
-titleLabel.BackgroundTransparency = 1
-titleLabel.Text = "Donut Hub"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.TextXAlignment = Enum.TextXAlignment.Right
-titleLabel.Font = Enum.Font.SourceSansBold
-titleLabel.TextSize = 18
-titleLabel.Parent = topBar
-
-closeButton.MouseButton1Click:Connect(function()
-    frame.Visible = false
+-- Hover effect
+ArsenalButton.MouseEnter:Connect(function()
+	ArsenalButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 end)
+ArsenalButton.MouseLeave:Connect(function()
+	ArsenalButton.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+end)
+
+-- Load script from GitHub repo
+ArsenalButton.MouseButton1Click:Connect(function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/hotsauceandqueso/donuthub/refs/heads/main/arsenal.lua"))()
+	end)
+end)
+
+-- Optional: Tween intro animation
+MainFrame.Position = UDim2.new(0.35, 0, -1, 0)
+MainFrame:TweenPosition(UDim2.new(0.35, 0, 0.3, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quint, 0.4, true)
