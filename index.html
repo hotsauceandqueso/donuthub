@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website with Larger Text and Updated Words</title>
+    <title>Donut Hub</title>
     <style>
         body {
             background: linear-gradient(to right, #000000, #ba00d6); /* Left-to-right gradient */
@@ -29,17 +29,27 @@
             margin: 0; /* Remove default margin */
         }
         .changing-word-container {
-            display: inline-block; /* Container for changing words */
-            width: 250px; /* Width to accommodate longer text */
-            text-align: left; /* Align text left within container */
+            display: inline-flex; /* Use flex to keep word and period together */
+            align-items: baseline; /* Align items to baseline for consistent positioning */
+            width: auto; /* Adjust width dynamically */
+            min-width: 250px; /* Ensure enough space for longer text */
         }
         .changing-word {
             color: #ffffff; /* White color for changing words */
             display: inline-block; /* Needed for animation */
             white-space: nowrap; /* Prevent text from stacking */
         }
+        .period {
+            color: #000000; /* Black color for period */
+            display: inline-block; /* Needed for animation */
+            font-size: 4rem; /* Match h1 font size */
+            line-height: 1; /* Ensure consistent vertical alignment */
+        }
         .animate {
             animation: scaleFade 0.5s ease-in-out; /* Animation triggered on word change */
+        }
+        .rainbow {
+            animation: rainbowText 6s linear infinite; /* Rainbow color animation */
         }
         /* Animation for initial heading */
         @keyframes fadeInUp {
@@ -52,7 +62,7 @@
                 transform: translateY(0);
             }
         }
-        /* Animation for changing words */
+        /* Animation for changing words and period */
         @keyframes scaleFade {
             0% {
                 opacity: 0;
@@ -63,26 +73,45 @@
                 transform: scale(1);
             }
         }
+        /* Rainbow color animation */
+        @keyframes rainbowText {
+            0% { color: #ff0000; }
+            14% { color: #ff9900; }
+            28% { color: #33cc33; }
+            42% { color: #00ccff; }
+            57% { color: #6600ff; }
+            71% { color: #cc00cc; }
+            85% { color: #ff3399; }
+            100% { color: #ff0000; }
+        }
     </style>
     <!-- Import Exo 2 font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word">fun</span></span></h1>
+    <h1>Welcome to <span class="changing-word-container"><span id="changing-word" class="changing-word">fun</span><span id="period" class="period">.</span></span></h1>
     <script>
         const words = ["fun", "ease of use", "Free scripts", "Donut Hub"];
         let currentIndex = 0;
         const changingWord = document.getElementById("changing-word");
+        const period = document.getElementById("period");
 
         function changeWord() {
-            // Remove animation class
-            changingWord.classList.remove("animate");
+            // Remove animation classes
+            changingWord.classList.remove("animate", "rainbow");
+            period.classList.remove("animate");
             // Trigger reflow to restart animation
             void changingWord.offsetWidth;
+            void period.offsetWidth;
             // Update word
             changingWord.textContent = words[currentIndex];
-            // Add animation class
+            // Add animation class to word and period
             changingWord.classList.add("animate");
+            period.classList.add("animate");
+            // Add rainbow animation for "Donut Hub"
+            if (words[currentIndex] === "Donut Hub") {
+                changingWord.classList.add("rainbow");
+            }
             currentIndex = (currentIndex + 1) % words.length; // Cycle through words
 
             // If we just displayed "Donut Hub", pause and restart
